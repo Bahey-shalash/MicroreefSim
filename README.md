@@ -42,7 +42,7 @@ To run the project with a test configuration file:
 ```sh
 ./projet txx.txt
 ```
-##Test Files
+## Test Files
 
 The test files for the project are located in the public folder.
 
