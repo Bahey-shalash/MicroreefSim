@@ -9,7 +9,7 @@ The project is divided into three main phases, each building upon the previous o
 1. **Phase 1**:
    - Implementation of the `shape` module for geometric calculations.
    - Reading and error detection of configuration files.
-   - Command-line execution: `./projet t01.txt`.
+   - Command-line execution: `./projet txx.txt`.
 
 2. **Phase 2**:
    - Development of the GTKMM graphical interface.
