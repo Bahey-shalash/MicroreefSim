@@ -1,0 +1,15 @@
+#
+# rotation corail avec collision entre 2 coraux, 3 fois alternativement des 2 cotés
+#
+
+0
+ 
+2
+    30. 105. 1350 33 1 0 1 1
+       0. 24
+
+    30. 115. 1350 34 1 1 1 1
+        0. 24
+
+0
+ 

@@ -1,0 +1,13 @@
+#
+# rotation corail avec superposition et 3 inversions de rotation avant mort
+#
+
+0
+ 
+1
+    30. 115. 1200 33 1 0 1 2
+       0. 28
+       0. 24
+
+0
+ 

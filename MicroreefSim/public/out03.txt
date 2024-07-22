@@ -1,0 +1,1 @@
+lifeform at (10.000000;0.000000) is outside allowed boundaries of [1, max-1]

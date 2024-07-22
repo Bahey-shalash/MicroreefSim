@@ -1,0 +1,17 @@
+#
+# l'extension est refusée à cause d'une collision avec le bord gauche; 
+# l'algue n'est pas consommée ; le corail ne bouge pas et tourne dans l'autre sens
+# au step suivant
+#
+
+1
+
+	4. 128. 1
+
+1
+    38. 125. 1440 33 1 0 0 1
+       3.0 36
+
+
+0
+ 

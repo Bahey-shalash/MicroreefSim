@@ -1,0 +1,16 @@
+#
+# rotation corail pour manger 2 algue2 aux steps 2 puis 4  ; puis nouveau segment 
+#
+
+2
+
+	30. 117. 1
+	30. 119. 1
+ 
+1
+    10. 115. 1440 33 1 0 0 1
+       0. 32
+
+
+0
+ 

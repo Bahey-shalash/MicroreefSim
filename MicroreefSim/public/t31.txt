@@ -1,0 +1,12 @@
+#
+# rotation corail avec collisions bords et 3 inversions de rotation avant mort
+#
+
+0
+ 
+1
+    23. 233. 1450 33 1 1 1 1
+       2.5 24
+
+0
+ 

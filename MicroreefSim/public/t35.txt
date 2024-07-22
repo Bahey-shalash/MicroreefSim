@@ -1,0 +1,18 @@
+#
+# Collision du corail de droite avec segment1 du corail de gauche, 
+# puis superposition puis collision avec segment2 du corail de gauche
+#
+
+0
+ 
+2
+    50. 115. 1440 33 1 0 1 2
+       -1.55 28
+       -1.2   24
+
+    90. 115. 1440 34 1 1 1 2
+        -3.1 28
+        -1.8 24
+
+0
+ 

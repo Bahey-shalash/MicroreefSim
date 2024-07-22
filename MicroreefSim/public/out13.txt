@@ -1,0 +1,1 @@
+lifeform age (0) is not strictly positive
