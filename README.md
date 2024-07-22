@@ -42,5 +42,14 @@ To run the project with a test configuration file:
 ```sh
 ./projet txx.txt
 ```
+##Test Files
+
+The test files for the project are located in the public folder.
+
 ## Author
+
 This project is developed by Bahey Shalash. Contributions are managed via GitLab, and we adhere to high coding standards and best practices.
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
