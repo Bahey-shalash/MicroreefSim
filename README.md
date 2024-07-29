@@ -53,3 +53,7 @@ This project is developed by Bahey Shalash. Contributions are managed via GitLab
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+## Examples <img width="645" alt="Screenshot 2024-07-30 at 1 02 47 A<img width="647" alt="Screenshot 2024-07-30 at 1 06 14 AM" src="https://github.com/user-attachments/assets/d4807837-92c4-4407-9336-c838872a81f7">
+M" src="https://github.com/user-attachments/assets/811ed031-8bfd-4b99-ad85-4cc7967f9a62">
+
+
