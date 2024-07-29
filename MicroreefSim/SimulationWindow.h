@@ -94,6 +94,7 @@ protected:
 
 private:
     sigc::connection m_Connection;
+    int tick_interval; // in milliseconds
 };
 
 #endif  // SIMULATION_WINDOW_H

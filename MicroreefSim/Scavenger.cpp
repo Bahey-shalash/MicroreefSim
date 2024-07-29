@@ -10,7 +10,7 @@
  * effectively extends CircularLifeform with additional behaviors critical to
  * scavengers.
  *
- * Author: Bahey Shalash 
+ * Authors: Bahey Shalash
  * Version: 1.0
  * Date: 27/04/2024
  */
@@ -19,12 +19,18 @@
 
 int Scavenger::nbsca = 0;
 
+std::set<unsigned int> Scavenger::targetIDs;
+
 Scavenger::Scavenger(const S2d& position, unsigned int initialAge, double radius,
                      Statut_sca status, int targetCoralId_)
     : CircularLifeform(position, radius, initialAge),
       status(status),
       targetCoralId(targetCoralId_) {
     ++nbsca;
+    // ad targetID to the set if it is not -1
+    if (targetCoralId != -1) {
+        targetIDs.insert(targetCoralId);
+    }
 }
 
 Scavenger::Scavenger(const Scavenger& other)
@@ -79,4 +85,51 @@ Statut_sca Scavenger::getStatus() const {
 
 int Scavenger::getTargetCoralId() const {
     return targetCoralId;
+}
+
+void Scavenger::incrementNbScavengers() {
+    ++nbsca;
+}
+
+void Scavenger::decrementNbScavengers() {
+    --nbsca;
+}
+
+void Scavenger::move(const S2d& newPosition) {
+    setPosition(newPosition);
+}
+
+void Scavenger::set_targetCoralId(unsigned int newtargetCoralId) {
+    targetCoralId = newtargetCoralId;
+}
+
+void Scavenger::clear_targetIDs() {
+    targetIDs.clear();
+}
+
+void Scavenger::addTargetID(unsigned int targetID) {
+    targetIDs.insert(targetID);
+}
+
+void Scavenger::removeTargetID(unsigned int targetID) {
+    targetIDs.erase(targetID);
+}
+
+std::set<unsigned int> Scavenger::getTargetIDs() {
+    return targetIDs;
+}
+
+void Scavenger::printTargetIDs() {
+    for (auto it = targetIDs.begin(); it != targetIDs.end(); ++it) {
+        std::cout << *it << " ";
+    }
+    std::cout << std::endl;
+}
+
+void Scavenger::setStatus(Statut_sca newStatus) {
+    status = newStatus;
+}
+
+void Scavenger::increse_radius(double delta) {
+    setRadius(radius + delta);
 }

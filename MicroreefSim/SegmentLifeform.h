@@ -17,6 +17,7 @@
 #define SEGMENTLIFEFORM_H
 
 #include "Lifeform.h"
+#include "constantes.h"
 
 class SegmentLifeform : public Lifeform {
 public:

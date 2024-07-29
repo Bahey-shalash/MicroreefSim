@@ -28,11 +28,6 @@ class Simulation {
 public:
     Simulation();
     void start(const std::string& config_file);
-    /* // for testing purposes
-    const std::vector<Algae>& getAlgaeVector() const { return algaeVec; }
-    const std::vector<Coral>& getCoralVector() const { return coralVec; }
-    const std::vector<Scavenger>& getScavengerVector() const { return scavengerVec; }
-  */
     void saveSimulation(const std::string& filename = "simulation_state.txt");
 
     unsigned getAlgaeCount() const;
@@ -49,16 +44,22 @@ public:
     void add_Coral_To_Simulation(const Coral& coral);
     void add_Scavenger_To_Simulation(const Scavenger& scavenger);
 
+    void remove_Algae_From_Simulation(const Algae& algae);
+    void remove_Coral_From_Simulation(const Coral& coral);
+    void remove_Scavenger_From_Simulation(const Scavenger& scavenger);
+
     void reset_simulation();
 
-    // for testing purposes
-    // print out the size of
-
+    // for testing purposes print out the size of
     void printEntitiesSize() const;
+    void printCorals() const;
 
     std::vector<Algae> get_algae_in_simulation() const;
     std::vector<Coral> get_coral_in_simulation() const;
     std::vector<Scavenger> get_scavenger_in_simulation() const;
+    void rotateCoral(Coral& coral);
+
+    void rotateCorals();
 
 private:
     std::vector<Algae> algaeVec;
@@ -110,15 +111,51 @@ private:
 
     void clearAllEntities();
 
-    void updateAlgae();
-    void updateCorals();      // rendue 3
-    void updateScavengers();  // rendue 3
+    void updateAlgae();       // helper method for updateEntities
+    void updateCorals();      // helper method for updateEntities
+    void updateScavengers();  // helper method for updateEntities
 
     void death_to_algae();   // helper method for updateAlgae, better conception
     void algae_generator();  // helper method for updateAlgae, better conception
 
+    void death_to_corals();
+
+    void death_to_scavengers();
+
     void startAlgaeBirth();
     void stopAlgaeBirth();
+
+    unsigned int generateNewUniqueID();
+    void growOrReproduceCoral(Coral& coral);
+
+    bool Do_Segment_intersect(const Coral& coral) const;
+    // Check if a given coral intersects or superimposes with other segments
+    bool checkCoralIntersection(const Coral& coral) const;
+
+    // Check for algae interaction and consume any algae the coral intersects with
+    void checkAndConsumeAlgae(Coral& coral);
+    bool sweepingPassDetected(const Coral& coral) const;
+
+    void print_algae_vector_with_age() const;
+    void reproduceCorals();
+    void reproduce_Coral_by_division(Coral& coral);
+    Coral generate_coralOffspring(Coral coral);
+    bool coral_algae_intersrct(Coral& coral);
+
+    void generateScavengerOffspring(S2d position_Of_baby_scavenger);
+
+    void remove_eaten_corals_from_simulation();
+
+    void scavengerFeedsOnCoral(Scavenger& Scavenger);
+    Coral* findNearestDeadCoral(const S2d& position);
+    // we can return nullprt if no coral is found hihi!
+    // TODO add assign nearest dead coral to scavenger by checking the distance between
+    // all of the scavengers and the dead corals
+
+    void moveScavenger_toDeadCoral(Scavenger& scavenger, Coral* coral);
+    Coral* findCoralById(unsigned int coralId);
+
+    void printScavengers() const;
 };
 
 #endif  // SIMULATION_H

@@ -35,6 +35,9 @@ public:
     S2d getPosition() const;
     void setPosition(const S2d& newPosition);
 
+    // Pure virtual grow method
+    //virtual void grow() = 0;
+
 protected:
     S2d pos;
     unsigned int age;

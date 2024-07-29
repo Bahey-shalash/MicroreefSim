@@ -1,4 +1,3 @@
-
 /**
  * File: DrawingArea.cpp
  * ---------------------
@@ -108,99 +107,12 @@ void DrawingArea::orthographic_projection(const Cairo::RefPtr<Cairo::Context>& c
     cr->translate(-(frame.xMin + frame.xMax) / 2, -(frame.yMin + frame.yMax) / 2);
 }
 
-void DrawingArea::drawBoundaries(const Cairo::RefPtr<Cairo::Context>& cr, int width,
-                                 int height) {
-    Color grey = Colors::Grey();  // Use the Grey color from Colors namespace
-    cr->save();
-    cr->set_source_rgb(grey.red, grey.blue, grey.green);
-    cr->set_line_width(2);  // plus jolie
 
-    // Start from the top-left corner
-    cr->move_to(0, 0);
-    cr->line_to(260, 0);    // Top edge
-    cr->line_to(260, 260);  // Right edge
-    cr->line_to(0, 260);    // Bottom edge
-    cr->close_path();       // Back to the start (left edge)
 
-    // 260 parce que les valeurs sont de 0 a 256 et les traits sont epais
 
-    cr->stroke();
-    cr->restore();
-}
 
-void DrawingArea::drawCircle(const Cairo::RefPtr<Cairo::Context>& cr, double x,
-                             double y, double radius, const Color& color) {
-    /* // multiply the radius by 5 to make it bigger for asthetic reasons
-    //radius *= 5; */
-    cr->save();  // Save the current state of the context
-    cr->set_source_rgb(color.red, color.green,
-                       color.blue);  // Set the color for the circle
 
-    // Calculate line width as a percentage of the radius (e.g., 5% of the radius)
-    // i didnt know what width to put so i put 5% of the radius
-    double line_width = radius * 0.5;  // he's gonna be a bit FATTTTT/ THICC BOI
-    cr->set_line_width(line_width);    // Set the thickness of the circle's border
 
-    // Transform the coordinates according to the orthographic projection
-    // Assume orthographic_projection has already been called for the context
-    cr->arc(x, y, radius, 0, 2 * M_PI);  // Draw the circle
-    cr->stroke();   // Stroke the path with the set color (outline only)
-    cr->restore();  // Restore the context state
-}
-
-void DrawingArea::drawSquare(const Cairo::RefPtr<Cairo::Context>& cr, double x,
-                             double y, double side, const Color& color) {
-    cr->save();  // Save the current state of the context
-    cr->set_source_rgb(color.red, color.green,
-                       color.blue);  // Set the color for the square
-
-    // Calculate line width as a percentage of the side length, e.g., 5% of the side
-    double line_width = side * 0.5;
-    cr->set_line_width(line_width);  // Set the thickness of the square's border
-
-    // Calculate the top-left corner based on the center coordinates (x, y)
-    double half_side = side / 2;
-    double x1 = x - half_side;
-    double y1 = y - half_side;
-
-    // Draw the square
-    cr->rectangle(x1, y1, side, side);
-    cr->stroke();   // Stroke the path with the set color (outline only)
-    cr->restore();  // Restore the context state
-}
-
-void DrawingArea::drawSegment(const Cairo::RefPtr<Cairo::Context>& cr,
-                              const Segment& segment,
-                              const Color& color) {  // blue by default
-
-    // multiply the length by 5 to make it bigger for asthetic reasons
-    Segment tempSegment = segment;
-    tempSegment.setLength(segment.getLength());
-
-    S2d base = tempSegment.getBase();
-    S2d extremite = tempSegment.calculate_extremite();
-
-    // double squareSide = d_cor;  // Side length of the square at the base, d_cor
-
-    cr->save();  // Save the current state of the context
-
-    // Draw the segment line
-    cr->set_source_rgb(color.red, color.green,
-                       color.blue);  // Example: set color to blue
-    cr->set_line_width(1.0);         // Set the line width, adjust as needed
-    cr->move_to(base.x, base.y);
-    cr->line_to(extremite.x, extremite.y);
-    cr->stroke();  // Stroke the path to draw the line
-
-    // Draw a square at the base of the segment
-
-    // drawSquare(cr, base.x, base.y, squareSide, color);
-
-    // apaarently the square is not needed for all segments of a coral so i will not
-    // draw it and this makes it more portable
-
-    cr->restore();  // Restore the context state
-}
 
 void DrawingArea::draw_an_algae(const Cairo::RefPtr<Cairo::Context>& cr,
                                 const Algae& algae) {
@@ -237,6 +149,31 @@ void DrawingArea::draw_a_coral(const Cairo::RefPtr<Cairo::Context>& cr,
                    Colors::Black());
     }
 }
+
+/* void DrawingArea::draw_a_coral(const Cairo::RefPtr<Cairo::Context>& cr,
+                               const Coral& coral) {
+    bool use_blue = true; // Flag to alternate colors
+    //alternating colors for the segments of the coral usfull for debugging
+    // Go through the segments of the coral and draw them with alternating colors if
+coral is alive for (const Segment& segment : coral.getSegments()) { if
+(coral.getStatut() == ALIVE) { if (use_blue) { drawSegment(cr, segment,
+Colors::Blue()); } else { drawSegment(cr, segment, Colors::Red());
+            }
+            use_blue = !use_blue; // Alternate color
+        } else {
+            drawSegment(cr, segment, Colors::Black());
+        }
+    }
+
+    // Draw a square at the base of the coral (2 colors)
+    if (coral.getStatut() == ALIVE) {
+        drawSquare(cr, coral.getPosition().x, coral.getPosition().y, d_cor,
+                   Colors::Blue());
+    } else {
+        drawSquare(cr, coral.getPosition().x, coral.getPosition().y, d_cor,
+                   Colors::Black());
+    }
+} */
 
 void DrawingArea::draw_all_entities(const Cairo::RefPtr<Cairo::Context>& cr,
                                     const std::vector<Algae>& algae,

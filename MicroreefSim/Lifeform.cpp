@@ -6,7 +6,7 @@
  * provides detailed implementations of the constructors, destructor, and member
  * functions for handling the life form's state, such as age and position.
  *
- * Author: Bahey Shalash
+ * Authors: Bahey Shalash 100%
  * Version: 1.0
  * Date: 27/04/2024
  */
