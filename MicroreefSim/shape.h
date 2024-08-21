@@ -86,7 +86,7 @@ double calculateDistance(const S2d& p, const S2d& q);// calculateDistance betwee
 
 std::ostream& operator<<(std::ostream& os, const Segment& segment);
 
-// TODO: divode shape.h into segment.h and cercle.h and square.h
+// TODO: divide shape.h into segment.h and cercle.h and square.h
 
 class Cercle {
 protected:
