@@ -7,7 +7,8 @@
  *              Detailed implementations for Segment, Circle, and Square classes
  *              are provided.
  *
- * Author: Bahey shalash
+ * Author: [Bahey shalash] 
+ * Contribution: Bahey shalash
  * Version: 1.0
  * Date: 27/04/2024
  */
@@ -105,7 +106,7 @@ int orientation(const S2d& p, const S2d& q, const S2d& r) {
     return (val > 0) ? 1 : 2;  // Clockwise or counterclockwise
 }
 
-/* bool onSegment(const S2d& p, const S2d& q, const S2d& r) {
+bool onSegment(const S2d& p, const S2d& q, const S2d& r) {
     // Direction vectors
     S2d pq = {q.x - p.x, q.y - p.y};
     S2d pr = {r.x - p.x, r.y - p.y};
@@ -132,65 +133,38 @@ int orientation(const S2d& p, const S2d& q, const S2d& r) {
     // The point r is on the line segment pq if the perpendicular distance is within
     // epsil_zero tolerance
     return perpendicularDistance <= epsil_zero;
-} */
-
-bool onSegment(const S2d& p, const S2d& q, const S2d& r) {
-    return q.x <= std::max(p.x, r.x) && q.x >= std::min(p.x, r.x) &&
-           q.y <= std::max(p.y, r.y) && q.y >= std::min(p.y, r.y);
 }
 
 bool Segment::doIntersect(const Segment& s1, const Segment& s2) {
     S2d p1 = s1.base, q1 = s1.calculate_extremite();
     S2d p2 = s2.base, q2 = s2.calculate_extremite();
 
-    // Helper function to compare two points with a small tolerance
-    auto almostEqual = [](const S2d& a, const S2d& b) {
-        return std::fabs(a.x - b.x) < epsil_zero && std::fabs(a.y - b.y) < epsil_zero;
-    };
-
-    // Skip intersection if any endpoints are almost equal (shared)
-    if (almostEqual(p1, p2) || almostEqual(p1, q2) || almostEqual(q1, p2) ||
-        almostEqual(q1, q2)) {
-        return false;
+    // Check for shared endpoints
+    if (p1 == p2 || p1 == q2 || q1 == p2 || q1 == q2) {
+        return false;  // Directly return false if any endpoint is shared
     }
 
-    // Function to check if a point q lies on segment pr
-    auto onSegment = [](const S2d& p, const S2d& q, const S2d& r) {
-        return q.x <= std::max(p.x, r.x) && q.x >= std::min(p.x, r.x) &&
-               q.y <= std::max(p.y, r.y) && q.y >= std::min(p.y, r.y);
-    };
-
-    // Function to compute the orientation of ordered triplet (p, q, r)
-    auto orientation = [](const S2d& p, const S2d& q, const S2d& r) {
-        double val = (q.y - p.y) * (r.x - q.x) - (q.x - p.x) * (r.y - q.y);
-        if (std::fabs(val) < epsil_zero)
-            return 0;              // Collinear
-        return (val > 0) ? 1 : 2;  // Clockwise or counterclockwise
-    };
-
-    // Compute the four orientation results
     int o1 = orientation(p1, q1, p2);
     int o2 = orientation(p1, q1, q2);
     int o3 = orientation(p2, q2, p1);
     int o4 = orientation(p2, q2, q1);
 
-    // General case: segments intersect if the orientations differ
+    // General case
     if (o1 != o2 && o3 != o4) {
         return true;
     }
 
-    // Special cases: check for collinear points lying on the segments
+    // Collinear cases - need to ensure there's actual overlap beyond endpoints
     if ((o1 == 0 && onSegment(p1, p2, q1)) || (o2 == 0 && onSegment(p1, q2, q1)) ||
         (o3 == 0 && onSegment(p2, p1, q2)) || (o4 == 0 && onSegment(p2, q1, q2))) {
         return true;
     }
 
-    // No intersection detected
+    // No intersection
     return false;
 }
 
-bool Segment::areSegmentsInSuperposition(const Segment& seg1,
-                                         const Segment& seg2) const {
+bool Segment::areSegmentsInSuperposition(const Segment& seg1, const Segment& seg2) {
     // Check for collinearity first
     int orientation1 =
         orientation(seg1.getBase(), seg1.calculate_extremite(), seg2.getBase());
@@ -200,31 +174,13 @@ bool Segment::areSegmentsInSuperposition(const Segment& seg1,
     // If both orientation checks are 0, segments are collinear
     if (orientation1 == 0 && orientation2 == 0) {
         // Check if segments share any common point
-        bool shareCommonPoint =
-            (onSegment(seg1.getBase(), seg2.getBase(), seg1.calculate_extremite()) &&
-             seg1.getBase() != seg2.getBase() &&
-             seg1.calculate_extremite() != seg2.getBase()) ||
-            (onSegment(seg1.getBase(), seg2.calculate_extremite(),
-                       seg1.calculate_extremite()) &&
-             seg1.getBase() != seg2.calculate_extremite() &&
-             seg1.calculate_extremite() != seg2.calculate_extremite()) ||
-            (onSegment(seg2.getBase(), seg1.getBase(), seg2.calculate_extremite()) &&
-             seg2.getBase() != seg1.getBase() &&
-             seg2.calculate_extremite() != seg1.getBase()) ||
-            (onSegment(seg2.getBase(), seg1.calculate_extremite(),
-                       seg2.calculate_extremite()) &&
-             seg2.getBase() != seg1.calculate_extremite() &&
-             seg2.calculate_extremite() != seg1.calculate_extremite());
-
-        // Check if the segments are superimposed based on the angles
-        bool areOppositeDirections =
-            std::fabs(Segment::angular_difference(seg1.getAngle(), -seg2.getAngle())) <
-            epsil_zero;
-
-        // If segments are opposite in direction and share a common point, they are
-        // superimposed
-        if (shareCommonPoint && areOppositeDirections) {
-            return true;
+        if (onSegment(seg1.getBase(), seg2.getBase(), seg1.calculate_extremite()) ||
+            onSegment(seg1.getBase(), seg2.calculate_extremite(),
+                      seg1.calculate_extremite()) ||
+            onSegment(seg2.getBase(), seg1.getBase(), seg2.calculate_extremite()) ||
+            onSegment(seg2.getBase(), seg1.calculate_extremite(),
+                      seg2.calculate_extremite())) {
+            return true;  // Segments are in superposition
         }
     }
 
@@ -247,57 +203,6 @@ void Segment::setLength(double length_) {
     length = length_;
 }
 
-void Segment::rotate(double rotation_angle) {
-    angle = normalize_angle(angle + rotation_angle);
-}
-
-bool Segment::intersectsCircle(const S2d& center, double radius) const {
-    // Vector from the base of the segment to the circle's center
-    S2d baseToCenter{center.x - base.x, center.y - base.y};
-
-    // Project baseToCenter onto the direction of the segment
-    double projection =
-        baseToCenter.x * std::cos(angle) + baseToCenter.y * std::sin(angle);
-
-    // Clamp the projection to be within the segment
-    projection = std::max(0.0, std::min(length, projection));
-
-    // Find the closest point on the segment to the circle's center
-    S2d closestPoint{base.x + projection * std::cos(angle),
-                     base.y + projection * std::sin(angle)};
-
-    // Calculate the squared distance from the closest point to the circle's center
-    double distanceSq = std::pow(center.x - closestPoint.x, 2) +
-                        std::pow(center.y - closestPoint.y, 2);
-
-    // Return whether the squared distance is less than or equal to the squared radius
-    return distanceSq <= radius * radius;
-}
-
-bool Segment::intersectsPoint(const S2d& center) const {
-    // Vector from the base of the segment to the circle's center
-    S2d baseToCenter{center.x - base.x, center.y - base.y};
-
-    // Project baseToCenter onto the direction of the segment
-    double projection =
-        baseToCenter.x * std::cos(angle) + baseToCenter.y * std::sin(angle);
-
-    // Clamp the projection to be within the segment
-    projection = std::max(0.0, std::min(length, projection));
-
-    // Find the closest point on the segment to the circle's center
-    S2d closestPoint{base.x + projection * std::cos(angle),
-                     base.y + projection * std::sin(angle)};
-
-    // Calculate the squared distance from the closest point to the circle's center
-    double distanceSq = std::pow(center.x - closestPoint.x, 2) +
-                        std::pow(center.y - closestPoint.y, 2);
-
-    // Return whether the squared distance is less than or equal to the squared
-    // epsilon_zero
-    return distanceSq <= epsil_zero * epsil_zero;
-}
-
 Cercle::Cercle(const S2d& centre_, double rayon_) : centre(centre_), rayon(rayon_) {}
 
 bool Cercle::is_inside(const S2d& point) const {
@@ -316,17 +221,4 @@ bool Square::is_inside(const S2d& point) const {
     double half_side = side / 2;
     return (std::fabs(point.x - centre.x) <= half_side + epsil_zero &&
             std::fabs(point.y - centre.y) <= half_side + epsil_zero);
-}
-
-void Segment::print_segment(Segment seg) {
-    std::cout << "Base: (x =" << seg.base.x << ", y=" << seg.base.y << ")"
-              << ", Angle: " << seg.angle << ", Length: " << seg.length
-              << "endpoint x=" << seg.calculate_extremite().x
-              << ", y= " << seg.calculate_extremite().y << std::endl;
-}
-
-double calculateDistance(const S2d& p, const S2d& q) {
-    return std::hypot(p.x - q.x, p.y - q.y);
-    // hypot is a function that returns the square root of the sum of the squares of
-    // its arguments
 }

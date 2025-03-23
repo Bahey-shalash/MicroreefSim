@@ -6,20 +6,20 @@
  *              It provides methods for geometric transformations, intersection tests,
  *              and checking inclusion within these shapes.
  *
- * Author: Bahey shalash
- * Version: 2.0
+ * Author: Bahey shalash 
+ * Version: 1.0
  * Date: 27/04/2024
  */
 
 #ifndef SHAPE_H
 #define SHAPE_H
 
-
+//! INTERDICTION d'utiliser using namespace std; dans les .h!!!!!!
 
 #include <cmath>  // For math constants and functions
 #include <iostream>
 
-constexpr double epsil_zero(0.5);
+#include "constantes.h"  // for epsil_zero
 
 struct S2d {  // Represents a 2D point or vector
     double x = 0;
@@ -36,8 +36,8 @@ struct S2d {  // Represents a 2D point or vector
 
 class Segment {
 protected:
-    S2d base;       // Base point of the segment
-    double angle;   // Angle from the horizontal
+    S2d base; // Base point of the segment
+    double angle; // Angle from the horizontal
     double length;  // Length of the segment
 
 public:
@@ -60,33 +60,23 @@ public:
     S2d getBase() const;
     void setLength(double length_);
 
-    void rotate(double rotation_angle);
-
     static bool doIntersect(const Segment& seg1, const Segment& seg2);
 
     static double angular_difference(double alpha1, double alpha2);
 
     static bool are_segments_superimposed(const Segment& seg1, const Segment& seg2);
-    bool areSegmentsInSuperposition(const Segment& seg1, const Segment& seg2) const;
-    bool intersectsCircle(const S2d& center, double radius) const;
-    bool intersectsPoint(const S2d& center) const;
-    
-
-    static void print_segment(Segment seg);
+    bool areSegmentsInSuperposition(const Segment& seg1, const Segment& seg2);
 
     friend std::ostream& operator<<(std::ostream& os, const Segment& segment);
-
 
     // Method to check if two segments have a common point
 };
 int orientation(const S2d& p, const S2d& q, const S2d& r);
 bool onSegment(const S2d& p, const S2d& q, const S2d& r);
 
-double calculateDistance(const S2d& p, const S2d& q);// calculateDistance between two points
-
 std::ostream& operator<<(std::ostream& os, const Segment& segment);
 
-// TODO: divide shape.h into segment.h and cercle.h and square.h
+// TODO: divode shape.h into segment.h and cercle.h and square.h
 
 class Cercle {
 protected:

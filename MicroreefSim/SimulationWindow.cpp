@@ -14,8 +14,8 @@
  *              - Dynamically updating display of entity counts
  *              - Managing algae reproduction control via a checkbox
  *
- * Author: Bahey Shalash
- * Version: 1.0
+ * Author: Bahey Shalash 
+ * Version: 2.0
  * Date: 27/04/2024
  */
 
@@ -52,8 +52,7 @@ SimulationWindow::SimulationWindow(Simulation& simulation_)
       mise_a_jour_Count(std::to_string(mise_a_jour_count)),
       algaeCountLabel(std::to_string(Algae_count)),
       coralCountLabel(std::to_string(coral_count)),
-      scavengerCountLabel(std::to_string(scavenger_count)),
-      tick_interval(100) {
+      scavengerCountLabel(std::to_string(scavenger_count)) {
     set_title("Micro_Reef");
     set_child(mainBox);
 
@@ -172,7 +171,7 @@ void SimulationWindow::Reset_INFO() {
 void SimulationWindow::onStartClicked() {
     if (startButton.get_active()) {
         m_Connection = Glib::signal_timeout().connect(
-            sigc::mem_fun(*this, &SimulationWindow::onTimeout), tick_interval);
+            sigc::mem_fun(*this, &SimulationWindow::onTimeout), 1000);
         startButton.set_label("Stop");
     } else {
         m_Connection.disconnect();
@@ -193,7 +192,7 @@ void SimulationWindow::onStepClicked() {
 }
 
 void SimulationWindow::onOpenClicked() {  // from la serie
-    // simulation.reset_simulation(); //dont reset the simulation when opening a file
+    simulation.reset_simulation();
 
     auto dialog = new Gtk::FileChooserDialog("Please choose a file",
                                              Gtk::FileChooser::Action::OPEN);

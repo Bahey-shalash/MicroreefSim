@@ -17,7 +17,6 @@
 #define SCAVENGER_H
 
 #include "CircularLifeform.h"
-#include <set>
 
 class Scavenger : public CircularLifeform {
 public:
@@ -31,35 +30,24 @@ public:
     bool operator!=(const Scavenger& other) const;
 
     virtual ~Scavenger();
-    // void update();
+    //void update();
 
     Statut_sca getStatus() const;
-    void setStatus(Statut_sca newStatus);
     int getTargetCoralId() const;
     static int getNbScavengers();
-    static void incrementNbScavengers();
-    static void decrementNbScavengers();
-    void set_targetCoralId(unsigned int newtargetCoralId);
-
+    
     friend std::ostream& operator<<(std::ostream& os, const Scavenger& scavenger);
-
-    void move(const S2d& newPosition);
-
-    static void clear_targetIDs();
-    static void addTargetID(unsigned int targetID);
-    static void removeTargetID(unsigned int targetID);
-    static std::set<unsigned int> getTargetIDs();
-
-    static void printTargetIDs() ;
-
-    void increse_radius(double delta);
-
 
 private:
     Statut_sca status;
     unsigned int targetCoralId;
     static int nbsca;
-    static std::set<unsigned int> targetIDs; 
+
+    /* // Helper methods for the scavenger's behavior for le rendue 3
+    void moveTowardsCoral();
+    void consumeCoral();
+    void reproduce();
+    void die(); */
 };
 
 std::ostream& operator<<(std::ostream& os, const Scavenger& scavenger);

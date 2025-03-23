@@ -10,8 +10,8 @@
  * within the ecosystem simulation, including operations like printing to output
  * streams, comparing life forms, and adjusting life form properties.
  *
- * Authors: Bahey Shalash
- * Version: 1.0
+ * Author: Bahey Shalash
+ * Version: 2.0
  * Date: 27/04/2024
  */
 

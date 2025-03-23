@@ -25,7 +25,7 @@
  * file should be in the current directory or specified with a relative or absolute
  * path.
  *
- * Authors: Bahey Shalash 100%
+ * Author: Bahey Shalash 
  * Version: 1.0
  * Date: 27/04/2024
  */

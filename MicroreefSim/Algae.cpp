@@ -10,7 +10,7 @@
  * crucial for simulating ecological dynamics, particularly algae population levels.
  *
  * Author: Bahey Shalash
- * Version: 1.0
+ * Version: 2.0
  * Date: 27/04/2024
  */
 

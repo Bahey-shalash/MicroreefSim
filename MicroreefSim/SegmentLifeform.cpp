@@ -8,7 +8,7 @@
  *              such as equality checks that consider both positional and
  * segment-specific characteristics.
  *
- * Authors: Bahey Shalash
+ * Author: Bahey Shalash
  * Version: 1.0
  * Date: 27/04/2024
  */
