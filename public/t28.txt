@@ -1,0 +1,15 @@
+#
+# rotation corail sans collision dans les 2 sens
+#
+
+0
+ 
+2
+    30. 115. 1350 33 1 0 1 1
+       0. 24
+
+    80. 115. 1350 34 1 1 1 1
+        0. 24
+
+0
+ 

@@ -1,0 +1,17 @@
+#
+# collision corail du haut avec base corail du bas et une superposition
+#
+
+0
+ 
+2
+    30. 105. 1450 33 1 0 1 2
+       -1.55 28
+       -2.55 24
+
+    50. 125. 1450 34 1 1 1 2
+        -3.1 28
+        -0.7 24
+
+0
+ 

@@ -1,0 +1,15 @@
+#
+# 2 steps pour manger une algue ; la longueur du corail augmente 
+#
+
+1
+
+	30. 117. 1
+ 
+1
+    10. 115. 1440 33 1 0 1 1
+       0. 24
+
+
+0
+ 
